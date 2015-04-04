@@ -1,4 +1,4 @@
-module Data.Multihash.Streams where
+module System.IO.Streams.Crypto where
 
 import           Control.Exception     (bracket)
 import           Crypto.Hash           (Digest, HashAlgorithm (..))

@@ -7,16 +7,16 @@ import qualified Data.ByteString            as BS
 import           Data.ByteString.Builder    (Builder, byteString,
                                              toLazyByteString)
 import qualified Data.ByteString.Builder    as BB
-import qualified Data.ByteString.Lazy       as LB
+import qualified Data.ByteString.Lazy       as BL
 import           Data.Monoid                ((<>))
 import           Data.Word                  (Word8)
 
 
 data MultihashDigest =
     MultihashDigest
-    { function :: !HashFunction
-    , lenght   :: !Length
-    , digest   :: !Digest
+    { algorithm :: !HashAlgorithm
+    , lenght    :: !Length
+    , digest    :: !Digest
     } deriving (Show, Eq)
 
 
@@ -24,48 +24,48 @@ type Length = Int
 type Digest = BS.ByteString
 
 
-data HashFunction
+data HashAlgorithm
     = SHA1
-    | SHA2256
-    | SHA2512
+    | SHA256
+    | SHA512
     | SHA3
     | BLAKE2B
     | BLAKE2S
     deriving (Show, Eq)
 
 
-instance Enum HashFunction where
-    toEnum   = toHashFunction
-    fromEnum = fromHashFunction
+instance Enum HashAlgorithm where
+    toEnum   = toHashAlgorithm
+    fromEnum = fromHashAlgorithm
 
 
-toHashFunction :: Int -> HashFunction
-toHashFunction 0x11 = SHA1
-toHashFunction 0x12 = SHA2256
-toHashFunction 0x13 = SHA2512
-toHashFunction 0x14 = SHA3
-toHashFunction 0x40 = BLAKE2B
-toHashFunction 0x41 = BLAKE2S
-toHashFunction _ = error "Unknown hash funciton code"
+toHashAlgorithm :: Int -> HashAlgorithm
+toHashAlgorithm 0x11 = SHA1
+toHashAlgorithm 0x12 = SHA256
+toHashAlgorithm 0x13 = SHA512
+toHashAlgorithm 0x14 = SHA3
+toHashAlgorithm 0x40 = BLAKE2B
+toHashAlgorithm 0x41 = BLAKE2S
+toHashAlgorithm _ = error "Unknown hash funciton code"
 
 
-fromHashFunction :: HashFunction -> Int
-fromHashFunction SHA1    = 0x11
-fromHashFunction SHA2256 = 0x12
-fromHashFunction SHA2512 = 0x13
-fromHashFunction SHA3    = 0x14
-fromHashFunction BLAKE2B = 0x40
-fromHashFunction BLAKE2S = 0x41
+fromHashAlgorithm :: HashAlgorithm -> Int
+fromHashAlgorithm SHA1    = 0x11
+fromHashAlgorithm SHA256  = 0x12
+fromHashAlgorithm SHA512  = 0x13
+fromHashAlgorithm SHA3    = 0x14
+fromHashAlgorithm BLAKE2B = 0x40
+fromHashAlgorithm BLAKE2S = 0x41
 
 
-encode :: HashFunction -> Length -> Digest -> LB.ByteString
-encode h l d = toLazyByteString $ encoder h l d
+encode :: HashAlgorithm -> Digest -> BL.ByteString
+encode h d = toLazyByteString $ encoder h d
 
 
-encoder :: HashFunction -> Length -> Digest -> Builder
-encoder h l d
+encoder :: HashAlgorithm -> Digest -> Builder
+encoder h d
     =  (BB.word8 . fromIntegral $ fromEnum h)
-    <> (BB.word8 $ fromIntegral l)
+    <> (BB.word8 . fromIntegral $ BS.length d)
     <> byteString d
 
 
