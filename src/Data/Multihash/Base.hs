@@ -14,7 +14,7 @@ data BaseEncoding
     -- | Base32
     | Base58 -- BTC
     | Base64
-    deriving (Show, Read, Eq)
+    deriving (Show, Read, Eq, Enum, Bounded)
 
 
 encode :: BaseEncoding -> ByteString -> ByteString
