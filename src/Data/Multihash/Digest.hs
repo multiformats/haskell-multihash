@@ -31,31 +31,26 @@ data HashAlgorithm
     | SHA3
     | BLAKE2B
     | BLAKE2S
-    deriving (Show, Eq)
+    deriving (Show, Read, Eq, Enum, Bounded)
 
 
-instance Enum HashAlgorithm where
-    toEnum   = toHashAlgorithm
-    fromEnum = fromHashAlgorithm
+fromCode :: Int -> HashAlgorithm
+fromCode 0x11 = SHA1
+fromCode 0x12 = SHA256
+fromCode 0x13 = SHA512
+fromCode 0x14 = SHA3
+fromCode 0x40 = BLAKE2B
+fromCode 0x41 = BLAKE2S
+fromCode _ = error "Unknown hash funciton code"
 
 
-toHashAlgorithm :: Int -> HashAlgorithm
-toHashAlgorithm 0x11 = SHA1
-toHashAlgorithm 0x12 = SHA256
-toHashAlgorithm 0x13 = SHA512
-toHashAlgorithm 0x14 = SHA3
-toHashAlgorithm 0x40 = BLAKE2B
-toHashAlgorithm 0x41 = BLAKE2S
-toHashAlgorithm _ = error "Unknown hash funciton code"
-
-
-fromHashAlgorithm :: HashAlgorithm -> Int
-fromHashAlgorithm SHA1    = 0x11
-fromHashAlgorithm SHA256  = 0x12
-fromHashAlgorithm SHA512  = 0x13
-fromHashAlgorithm SHA3    = 0x14
-fromHashAlgorithm BLAKE2B = 0x40
-fromHashAlgorithm BLAKE2S = 0x41
+toCode :: HashAlgorithm -> Int
+toCode SHA1    = 0x11
+toCode SHA256  = 0x12
+toCode SHA512  = 0x13
+toCode SHA3    = 0x14
+toCode BLAKE2B = 0x40
+toCode BLAKE2S = 0x41
 
 
 encode :: HashAlgorithm -> Digest -> BL.ByteString
@@ -64,7 +59,7 @@ encode h d = toLazyByteString $ encoder h d
 
 encoder :: HashAlgorithm -> Digest -> Builder
 encoder h d
-    =  (BB.word8 . fromIntegral $ fromEnum h)
+    =  (BB.word8 . fromIntegral $ toCode h)
     <> (BB.word8 . fromIntegral $ BS.length d)
     <> byteString d
 
@@ -75,7 +70,7 @@ decode = parseOnly decoder
 
 decoder :: Parser MultihashDigest
 decoder = do
-    h <- (toEnum . fromIntegral <$> A.anyWord8)
+    h <- (fromCode . fromIntegral <$> A.anyWord8)
     l <- (fromIntegral <$> A.anyWord8)
     d <- A.take l
     return $ MultihashDigest h l d
