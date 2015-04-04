@@ -1,0 +1,43 @@
+name:                multihash
+version:             0.1.0
+-- synopsis:
+-- description:
+license:             BSD3
+license-file:        LICENSE
+author:              Luke Hoersten
+maintainer:          luke@hoersten.org
+-- copyright:
+category:            Data
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+library
+  exposed-modules:
+                  Data.Multihash.Digest
+                , Data.Multihash.Streams
+
+
+  -- other-modules:
+  -- other-extensions:
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  build-depends:       attoparsec        >= 0.12 && < 0.13
+                     , base              >= 4.8  && < 4.9
+                     , bytestring        >= 0.10 && < 0.11
+                     , cryptohash        >= 0.11 && < 0.12
+                     , io-streams        >= 1.2  && < 1.3
+
+
+executable multihash
+  main-is:           Main.hs
+  hs-source-dirs:    main/
+  default-language:  Haskell2010
+  ghc-prof-options:  -fprof-auto "-with-rtsopts=-N -p -s -h -i0.1 -xc"
+  ghc-options:       -threaded -Wall -fwarn-tabs -funbox-strict-fields -O2 -fdicts-cheap
+                     -fno-warn-orphans -fno-warn-unused-do-bind -rtsopts
+
+  build-depends: base              >= 4.8  && < 4.9
+               , cryptohash        >= 0.11 && < 0.12
+               , io-streams        >= 1.2  && < 1.3
+               , multihash         >= 0.1  && < 0.2
