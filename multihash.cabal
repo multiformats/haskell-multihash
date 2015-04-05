@@ -1,25 +1,31 @@
 name:                multihash
 version:             0.1.0
--- synopsis:
--- description:
+synopsis:            Multihash library and CLI executable
+description:         Multihash is a protocol for encoding the hash algorithm
+                     and digest length at the start of the digest.
+                     More information available at https:\/\/github.com\/jbenet\/multihash\/.
+                     .
+                     Base32 encoding, Blake hashing, and file checking still to be added.
+                     .
 license:             BSD3
 license-file:        LICENSE
 author:              Luke Hoersten
 maintainer:          luke@hoersten.org
--- copyright:
+copyright:           2015 Luke Hoersten
 category:            Data
 build-type:          Simple
--- extra-source-files:
 cabal-version:       >=1.10
+
+source-repository head
+  type: git
+  location: git://github.com/LukeHoersten/multihash.git
+
 
 library
   exposed-modules: Data.Multihash.Base
                  , Data.Multihash.Digest
                  , System.IO.Streams.Crypto
 
-
-  -- other-modules:
-  -- other-extensions:
   hs-source-dirs:      src
   default-language:    Haskell2010
 
@@ -38,7 +44,6 @@ executable multihash
   main-is:           Main.hs
   hs-source-dirs:    main
   default-language:  Haskell2010
-  ghc-prof-options:  -fprof-auto "-with-rtsopts=-N -p -s -h -i0.1 -xc"
   ghc-options:       -threaded -Wall -fwarn-tabs -funbox-strict-fields -O2 -fdicts-cheap
                      -fno-warn-orphans -fno-warn-unused-do-bind -rtsopts
 

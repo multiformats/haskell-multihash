@@ -8,11 +8,11 @@ import           Data.Either                 (Either)
 import qualified Data.Hex                    as B16
 
 
+-- TODO add Base32 encoding
 data BaseEncoding
-    = Base2
-    | Base16 -- Hex
-    -- | Base32
-    | Base58 -- BTC
+    = Base2  -- ^ Raw binary encoding
+    | Base16 -- ^ Hexadecimal encoding
+    | Base58 -- ^ Bitcoin encoding
     | Base64
     deriving (Show, Read, Eq, Enum, Bounded)
 

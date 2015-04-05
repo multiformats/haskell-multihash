@@ -8,6 +8,7 @@ import           Data.Byteable            (toBytes)
 import           Data.ByteString          (ByteString)
 import           Data.ByteString.Lazy     (fromStrict, toStrict)
 import           Options.Applicative
+import           System.Exit              (exitFailure, exitSuccess)
 
 import           System.IO.Streams        (InputStream, stdin, stdout,
                                            withFileAsInput, write)
@@ -23,40 +24,46 @@ data Config =
     { cfFile :: Maybe FilePath
     , cfAlgo :: MH.HashAlgorithm
     , cfBase :: MB.BaseEncoding
+    , cfHash :: Maybe MH.Digest
     , cfTerm :: Termination
     } deriving Show
 
 
 main :: IO ()
 main = do
+    -- TODO add file checking
     config <- execParser opts
-
-    digest <- maybe
-              (hash (cfAlgo config) stdin)
-              (`withFileAsInput` hash (cfAlgo config))
-              (cfFile config)
-
-    write (encode config digest) stdout
+    digest <- maybe (hashStdin config) (hashFile config) $ cfFile config
+    write (multihash config digest) stdout
   where
-    encode (Config _file algo base term) =
+    hashStdin config = hash (cfAlgo config) stdin
+    hashFile config file = withFileAsInput file . hash $ cfAlgo config
+    multihash (Config _file algo base _hash term) =
         Just . toStrict . line term . MB.encode base . MH.encode algo
 
     line Null    = (<> "\0")
     line Newline = (<> "\n")
 
 
+-- TODO add BLAKE support
 hash :: MH.HashAlgorithm -> InputStream ByteString -> IO MH.Digest
 hash MH.SHA1 is   = toBytes <$> (hashInputStream is :: IO (Digest CH.SHA1))
 hash MH.SHA256 is = toBytes <$> (hashInputStream is :: IO (Digest CH.SHA256))
 hash MH.SHA512 is = toBytes <$> (hashInputStream is :: IO (Digest CH.SHA512))
 hash MH.SHA3 is   = toBytes <$> (hashInputStream is :: IO (Digest CH.SHA3_256))
-hash MH.BLAKE2B _       = undefined
-hash MH.BLAKE2S _       = undefined
+hash MH.BLAKE2B _ = undefined
+hash MH.BLAKE2S _ = undefined
 
 
 opts :: ParserInfo Config
 opts = info
-       (helper <*> (Config <$> fileArg <*> algoOpt <*> baseOpt <*> nullTermFlag))
+       (helper <*> (Config
+                    <$> fileArg
+                    <*> algoOpt
+                    <*> baseOpt
+                    <*> checkOpt
+                    <*> nullTermFlag
+                   ))
        (fullDesc
         <> header "Generate a multihash for the given input."
         <> progDesc "Hash from FILE or stdin if not given.")
@@ -69,7 +76,7 @@ algoOpt =
     <> short 'a'
     <> metavar "ALGO"
     <> showDefault <> value MH.SHA256
-    <> help ("Hash algorithm to apply to input " <> show ([minBound..] :: [MH.HashAlgorithm]))
+    <> help ("Hash algorithm to apply to input, ignored if checking hash " <> show ([minBound..] :: [MH.HashAlgorithm]))
 
 
 baseOpt :: Parser MB.BaseEncoding
@@ -79,7 +86,16 @@ baseOpt =
     <> short 'e'
     <> metavar "ENCODING"
     <> showDefault <> value MB.Base58
-    <> help ("Base encoding of output digest " <> show ([minBound..] :: [MB.BaseEncoding]))
+    <> help ("Base encoding of output digest, ignored if checking hash " <> show ([minBound..] :: [MB.BaseEncoding]))
+
+
+checkOpt :: Parser (Maybe MH.Digest)
+checkOpt =
+    optional . option auto
+    $  long "check"
+    <> short 'c'
+    <> metavar "DIGEST"
+    <> help "Check for matching digest"
 
 
 nullTermFlag :: Parser Termination
