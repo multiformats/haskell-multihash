@@ -16,7 +16,7 @@ import           Data.Word                  (Word8)
 data MultihashDigest =
     MultihashDigest
     { algorithm :: !HashAlgorithm
-    , lenght    :: !Length
+    , length    :: !Length
     , digest    :: !Digest
     } deriving (Show, Eq)
 
