@@ -6,9 +6,8 @@ import           Crypto.Hash              (Digest)
 import qualified Crypto.Hash              as CH
 import           Data.Byteable            (toBytes)
 import           Data.ByteString          (ByteString)
-import           Data.ByteString.Lazy     (fromStrict, toStrict)
+import           Data.ByteString.Lazy     (toStrict)
 import           Options.Applicative
-import           System.Exit              (exitFailure, exitSuccess)
 
 import           System.IO.Streams        (InputStream, stdin, stdout,
                                            withFileAsInput, write)
