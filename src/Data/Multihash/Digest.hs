@@ -1,6 +1,7 @@
 module Data.Multihash.Digest where
 
 
+import           Control.Applicative        ((<$>))
 import           Data.Attoparsec.ByteString (Parser, parseOnly)
 import qualified Data.Attoparsec.ByteString as A
 import qualified Data.ByteString            as BS
@@ -15,7 +16,7 @@ import           Data.Word                  (Word8)
 data MultihashDigest =
     MultihashDigest
     { algorithm :: !HashAlgorithm
-    , lenght    :: !Length
+    , length    :: !Length
     , digest    :: !Digest
     } deriving (Show, Eq)
 
