@@ -42,7 +42,7 @@ fromCode 0x13 = SHA512
 fromCode 0x14 = SHA3
 fromCode 0x40 = BLAKE2B
 fromCode 0x41 = BLAKE2S
-fromCode _ = error "Unknown hash funciton code"
+fromCode _ = error "Unknown hash function code"
 
 
 toCode :: HashAlgorithm -> Int
