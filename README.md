@@ -1,5 +1,8 @@
 # haskell-multihash
 
+[![](https://img.shields.io/badge/project-multiformats-blue.svg?style=flat-square)](http://github.com/multiformats/multiformats)
+[![](https://img.shields.io/badge/freenode-%23ipfs-blue.svg?style=flat-square)](http://webchat.freenode.net/?channels=%23ipfs)
+
 > Multihash Haskell implementation
 
 This is the Haskell implementation of [multihash](https://github.com/multiformats/multihash), by [@LukeHoersten](https://github.com/LukeHoersten).
