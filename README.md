@@ -10,7 +10,9 @@ This is the Haskell implementation of [multihash](https://github.com/multiformat
 
 ## Install
 
-`stack install`
+This package can be installed with [stack](https://haskellstack.org/), a common Haskell package manager.
+
+`$ stack install`
 
 ## Usage
 
@@ -21,6 +23,8 @@ TODO
 [@LukeHoersten](https://github.com/LukeHoersten).
 
 ## Contribute
+
+This package follows the Haskell [Haskell Package Versioning Policy](https://pvp.haskell.org).
 
 Contributions welcome: please [open an issue](https://github.com/multiformats/haskell-multihash/issues).
 
