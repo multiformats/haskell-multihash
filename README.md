@@ -10,7 +10,7 @@ This is the Haskell implementation of [multihash](https://github.com/multiformat
 
 ## Install
 
-TODO
+`stack install`
 
 ## Usage
 
