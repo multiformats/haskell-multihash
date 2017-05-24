@@ -31,15 +31,15 @@ library
   hs-source-dirs:      src
   default-language:    Haskell2010
 
-  build-depends: attoparsec        >= 0.12
-               , base              >= 4.7    && <  4.10
-               -- , base32-bytestring >= 0.2
-               , base58-bytestring >= 0.1
-               , base64-bytestring >= 1.0
-               , bytestring        >= 0.10
-               , cryptohash        >= 0.11
-               , hex               >= 0.1
-               , io-streams        >= 1.2
+  build-depends: attoparsec        >= 0.12   && < 0.14
+               , base              >= 4.7    && < 4.10
+               -- , base32-bytestring >= 0.2 
+               , base58-bytestring >= 0.1    && < 0.2
+               , base64-bytestring >= 1.0    && < 1.1
+               , bytestring        >= 0.10   && < 0.11
+               , cryptohash        >= 0.11   && < 0.12
+               , hex               >= 0.1    && < 0.2
+               , io-streams        >= 1.2    && < 1.4
 
 
 executable multihash
@@ -49,14 +49,14 @@ executable multihash
   ghc-options:       -threaded -Wall -fwarn-tabs -funbox-strict-fields -O2 -fdicts-cheap
                      -fno-warn-orphans -fno-warn-unused-do-bind -rtsopts
 
-  build-depends: base                 >= 4.7
+  build-depends: base                 >= 4.7  && < 4.10
                -- , base32-bytestring >= 0.2
-               , base64-bytestring    >= 1.0
-               , base58-bytestring    >= 0.1
-               , byteable             >= 0.1
-               , bytestring           >= 0.10
-               , cryptohash           >= 0.11
-               , hex                  >= 0.1 
-               , io-streams           >= 1.2
-               , multihash            >= 0.1
-               , optparse-applicative >= 0.11
+               , base64-bytestring    >= 1.0  && < 1.1
+               , base58-bytestring    >= 0.1  && < 0.2
+               , byteable             >= 0.1  && < 0.2
+               , bytestring           >= 0.10 && < 0.11
+               , cryptohash           >= 0.11 && < 0.12
+               , hex                  >= 0.1  && < 0.2
+               , io-streams           >= 1.2  && < 1.4
+               , multihash            >= 0.1 
+               , optparse-applicative >= 0.11 && < 0.14
