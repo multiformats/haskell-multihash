@@ -32,7 +32,7 @@ library
   default-language:    Haskell2010
 
   build-depends: attoparsec        >= 0.12
-               , base              >= 4.7
+               , base              >= 4.7    && <  4.10
                -- , base32-bytestring >= 0.2
                , base58-bytestring >= 0.1
                , base64-bytestring >= 1.0
