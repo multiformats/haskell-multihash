@@ -10,8 +10,6 @@ import           Data.ByteString.Builder    (Builder, byteString,
 import qualified Data.ByteString.Builder    as BB
 import qualified Data.ByteString.Lazy       as BL
 import           Data.Monoid                ((<>))
-import           Data.Word                  (Word8)
-
 
 data MultihashDigest =
     MultihashDigest

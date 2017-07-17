@@ -7,6 +7,7 @@ import qualified Crypto.Hash              as CH
 import           Data.Byteable            (toBytes)
 import           Data.ByteString          (ByteString)
 import           Data.ByteString.Lazy     (toStrict)
+import           Data.Monoid              ((<>))
 import           Options.Applicative
 
 import           System.IO.Streams        (InputStream, stdin, stdout,
