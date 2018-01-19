@@ -4,9 +4,9 @@ module Main where
 
 import Crypto.Hash (Digest)
 import qualified Crypto.Hash as CH
+import Data.ByteArray (convert)
 import Data.ByteString (ByteString)
 import Data.ByteString.Lazy (toStrict)
-import Data.Byteable (toBytes)
 import Data.Monoid ((<>))
 import Options.Applicative
 
@@ -46,10 +46,10 @@ main
 
 -- TODO add BLAKE support
 hash :: MH.HashAlgorithm -> InputStream ByteString -> IO MH.Digest
-hash MH.SHA1 is = toBytes <$> (hashInputStream is :: IO (Digest CH.SHA1))
-hash MH.SHA256 is = toBytes <$> (hashInputStream is :: IO (Digest CH.SHA256))
-hash MH.SHA512 is = toBytes <$> (hashInputStream is :: IO (Digest CH.SHA512))
-hash MH.SHA3 is = toBytes <$> (hashInputStream is :: IO (Digest CH.SHA3_256))
+hash MH.SHA1 is = convert <$> (hashInputStream is :: IO (Digest CH.SHA1))
+hash MH.SHA256 is = convert <$> (hashInputStream is :: IO (Digest CH.SHA256))
+hash MH.SHA512 is = convert <$> (hashInputStream is :: IO (Digest CH.SHA512))
+hash MH.SHA3 is = convert <$> (hashInputStream is :: IO (Digest CH.SHA3_256))
 hash MH.BLAKE2B _ = undefined
 hash MH.BLAKE2S _ = undefined
 

@@ -32,14 +32,14 @@ library
   default-language:    Haskell2010
 
   build-depends: attoparsec        >= 0.12 && < 0.14
-               , base              >= 4.7  && < 4.10
+               , base              >= 4.7  && < 5.0
                -- , base32-bytestring >= 0.2  && < 0.3
                , base58-bytestring >= 0.1  && < 0.2
                , base64-bytestring >= 1.0  && < 1.1
                , bytestring        >= 0.10 && < 0.11
-               , cryptohash        >= 0.11 && < 0.12
+               , cryptonite        >= 0.24 && < 0.25
                , hex               >= 0.1  && < 0.2
-               , io-streams        >= 1.2  && < 1.4
+               , io-streams        >= 1.2  && < 1.6
 
 
 executable multihash
@@ -49,14 +49,15 @@ executable multihash
   ghc-options:       -threaded -Wall -fwarn-tabs -funbox-strict-fields -O2 -fdicts-cheap
                      -fno-warn-orphans -fno-warn-unused-do-bind -rtsopts
 
-  build-depends: base                 >= 4.7  && < 4.10
+  build-depends: base                 >= 4.7  && < 5.0
                -- , base32-bytestring >= 0.2
                , base64-bytestring    >= 1.0  && < 1.1
                , base58-bytestring    >= 0.1  && < 0.2
                , byteable             >= 0.1  && < 0.2
                , bytestring           >= 0.10 && < 0.11
-               , cryptohash           >= 0.11 && < 0.12
+               , cryptonite           >= 0.24 && < 0.25
                , hex                  >= 0.1  && < 0.2
-               , io-streams           >= 1.2  && < 1.4
+               , io-streams           >= 1.2  && < 1.6
                , multihash            >= 0.1  && < 0.2
-               , optparse-applicative >= 0.11 && < 0.14
+               , optparse-applicative >= 0.11 && < 0.15
+               , memory               >= 0.14.11 && < 0.15.0
