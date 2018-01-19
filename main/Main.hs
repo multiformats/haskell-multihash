@@ -44,14 +44,15 @@ main
     line Null = (<> "\0")
     line Newline = (<> "\n")
 
--- TODO add BLAKE support
 hash :: MH.HashAlgorithm -> InputStream ByteString -> IO MH.Digest
 hash MH.SHA1 is = convert <$> (hashInputStream is :: IO (Digest CH.SHA1))
 hash MH.SHA256 is = convert <$> (hashInputStream is :: IO (Digest CH.SHA256))
 hash MH.SHA512 is = convert <$> (hashInputStream is :: IO (Digest CH.SHA512))
 hash MH.SHA3 is = convert <$> (hashInputStream is :: IO (Digest CH.SHA3_256))
-hash MH.BLAKE2B _ = undefined
-hash MH.BLAKE2S _ = undefined
+hash MH.BLAKE2B is =
+  convert <$> (hashInputStream is :: IO (Digest CH.Blake2b_512))
+hash MH.BLAKE2S is =
+  convert <$> (hashInputStream is :: IO (Digest CH.Blake2s_256))
 
 opts :: ParserInfo Config
 opts =

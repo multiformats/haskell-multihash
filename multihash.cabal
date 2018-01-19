@@ -6,7 +6,7 @@ description:         Multihash is a protocol for encoding the hash algorithm
                      More information available at the official
                      <https://github.com/jbenet/multihash/ multihash github>.
                      .
-                     Base32 encoding, Blake hashing, and file checking still to be added.
+                     Base32 encoding and file checking still to be added.
                      .
 license:             BSD3
 license-file:        LICENSE
