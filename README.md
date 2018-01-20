@@ -35,4 +35,3 @@ Small note: If editing the README, please conform to the [standard-readme](https
 ## License
 
 [Copyright](LICENSE) © 2015, Luke Hoersten
-
