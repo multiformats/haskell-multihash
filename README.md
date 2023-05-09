@@ -1,3 +1,5 @@
+**This project is no longer maintained and has been archived.**
+
 # haskell-multihash
 
 [![](https://img.shields.io/badge/project-multiformats-blue.svg?style=flat-square)](https://github.com/multiformats/multiformats)
